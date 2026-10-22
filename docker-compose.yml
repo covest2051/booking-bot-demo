@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: booking
+      POSTGRES_USER: booking
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?задайте POSTGRES_PASSWORD в .env}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U booking -d booking"]
+      interval: 5s
+      retries: 10
+    restart: unless-stopped
+    # Порт наружу не публикуем: базой пользуется только бот внутри docker-сети.
+
+  bot:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/booking
+      DB_USER: booking
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      BOT_TOKEN: ${BOT_TOKEN:?задайте BOT_TOKEN в .env}
+      ADMIN_IDS: ${ADMIN_IDS:-}
+      DEMO_MODE: ${DEMO_MODE:-false}
+      SALON_CONFIG: /app/salon.yml
+    volumes:
+      - ./salon.yml:/app/salon.yml:ro
+    restart: unless-stopped
+
+volumes:
+  db-data:

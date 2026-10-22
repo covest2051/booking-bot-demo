@@ -1,0 +1,33 @@
+salon:
+  name: "Тестовый салон"
+  phone: "+375 29 111-11-11"
+  slot-step: 30m
+  min-lead-time: 1h
+  booking-horizon-days: 14
+  cancel-before: 3h
+  max-active-bookings: 2
+  services:
+    - code: cut
+      name: "Стрижка"
+      duration: 60m
+      price: 30
+    - code: quick
+      name: "Экспресс"
+      duration: 30m
+      price: 15
+  masters:
+    - code: m1
+      name: "Первый"
+      services: [cut, quick]
+      schedule: &everyday
+        MONDAY: "10:00-18:00"
+        TUESDAY: "10:00-18:00"
+        WEDNESDAY: "10:00-18:00"
+        THURSDAY: "10:00-18:00"
+        FRIDAY: "10:00-18:00"
+        SATURDAY: "10:00-18:00"
+        SUNDAY: "10:00-18:00"
+    - code: m2
+      name: "Второй"
+      services: [cut]
+      schedule: *everyday

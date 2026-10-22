@@ -1,0 +1,58 @@
+# Настройки салона. Под нового заказчика меняется только этот файл, затем перезапуск бота.
+# Коды услуг и мастеров — латиница/цифры, до 8 символов (попадают в кнопки Telegram).
+salon:
+  name: "Салон «Демо»"
+  address: "г. Минск, ул. Примерная, 1"
+  phone: "+375 29 000-00-00"
+
+  slot-step: 30m            # шаг сетки времени
+  min-lead-time: 1h         # не раньше чем через час от текущего момента
+  booking-horizon-days: 14  # на сколько дней вперёд открыта запись
+  cancel-before: 3h         # клиент может отменить сам не позже чем за 3 часа
+  max-active-bookings: 2    # предстоящих записей на одного клиента
+
+  services:
+    - code: cutw
+      name: "Женская стрижка"
+      duration: 60m
+      price: 45
+    - code: cutm
+      name: "Мужская стрижка"
+      duration: 30m
+      price: 25
+    - code: color
+      name: "Окрашивание"
+      duration: 120m
+      price: 90
+    - code: mani
+      name: "Маникюр с покрытием"
+      duration: 90m
+      price: 40
+
+  masters:
+    - code: anna
+      name: "Анна"
+      services: [cutw, cutm, color]
+      schedule:
+        MONDAY: "10:00-19:00"
+        TUESDAY: "10:00-19:00"
+        WEDNESDAY: "10:00-19:00"
+        THURSDAY: "10:00-19:00"
+        FRIDAY: "10:00-19:00"
+    - code: olga
+      name: "Ольга"
+      services: [cutw, color]
+      schedule:
+        WEDNESDAY: "12:00-20:00"
+        THURSDAY: "12:00-20:00"
+        FRIDAY: "12:00-20:00"
+        SATURDAY: "10:00-16:00"
+        SUNDAY: "10:00-16:00"
+    - code: maria
+      name: "Мария"
+      services: [mani]
+      schedule:
+        MONDAY: "09:00-18:00"
+        TUESDAY: "09:00-18:00"
+        THURSDAY: "09:00-18:00"
+        SATURDAY: "10:00-15:00"

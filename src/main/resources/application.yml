@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: booking-bot-demo
+  # Настройки салона лежат отдельно, рядом с приложением: под нового заказчика меняется только этот файл.
+  config:
+    import: "optional:file:${SALON_CONFIG:./salon.yml}"
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/booking}
+    username: ${DB_USER:booking}
+    password: ${DB_PASSWORD:booking}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+bot:
+  enabled: ${BOT_ENABLED:true}
+  token: ${BOT_TOKEN:}
+  # Telegram id администраторов через запятую; узнать свой id — у @userinfobot
+  admin-ids: ${ADMIN_IDS:}
+  # true — клиент видит копию уведомления администратору (для показа заказчикам)
+  demo-mode: ${DEMO_MODE:false}
+  zone: Europe/Minsk
+  reminder-interval: PT1M
+
+logging:
+  level:
+    # Hibernate пишет ERROR на каждое нарушение booking_no_overlap, а для нас это штатное «время уже заняли».
+    # Настоящие ошибки всё равно попадают в лог через BookingBot.
+    org.hibernate.engine.jdbc.spi.SqlExceptionHelper: "off"
